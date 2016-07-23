@@ -6,6 +6,7 @@
 # With options to run scripts/programs/commands on update failure/success.
 #
 # Requirements:
+# - Bash - On LEDE/OpenWRT, opkg install bash
 # - curl CLI - On Debian, apt-get install curl
 #
 # History:
@@ -17,11 +18,11 @@
 # Begin settings
 # Get the Production API key/secret from https://developer.godaddy.com/keys/.
 # Ensure it's for "Production" as first time it's created for "Test".
-Key=fsvVddxVsfe_frhN1SAgfdgCdAfyVdWDdv
-Secret=FwkUfafh8dgrsdydrdfC1e
+Key=<API production key>
+Secret=<API secret>
  
 # Domain to update.
-Domain=teanazar.com
+Domain=<domain name>
  
 # Advanced settings - change only if you know what you're doing :-)
 # Record type, as seen in the DNS setup page, default A.
@@ -55,6 +56,7 @@ FailedExec=''
 # End settings
  
 Curl=$(/usr/bin/which curl 2>/dev/null)
+Touch=$(/usr/bin/which touch 2>/dev/null)
 [ "${Curl}" = "" ] &&
 echo "Error: Unable to find 'curl CLI'." && exit 1
 [ -z "${Key}" ] || [ -z "${Secret}" ] &&
@@ -65,7 +67,7 @@ echo "Error: Requires 'Domain' value." && exit 1
 [ -z "${Name}" ] && Name=@
 [ -z "${TTL}" ] && TTL=600
 [ "${TTL}" -lt 600 ] && TTL=600
-/usr/bin/touch ${CachedIP} 2>/dev/null
+${Touch} ${CachedIP} 2>/dev/null
 [ $? -ne 0 ] && echo "Error: Can't write to ${CachedIP}." && exit 1
 [ -z "${CheckURL}" ] && CheckURL=http://api.ipify.org
 echo -n "Checking current 'Public IP' from '${CheckURL}'..."
