@@ -94,7 +94,7 @@ if [ "$(cat ${CachedIP} 2>/dev/null)" != "${PublicIP}" ];then
     -H"Content-type: application/json" \
     https://api.godaddy.com/v1/domains/${Domain}/records/${Type}/${Name} \
     -d "[{\"data\":\"${PublicIP}\",\"ttl\":${TTL}}]" 2>/dev/null)
-    if [ $? -eq 0 ] && [ "${Update}" = "{}" ];then
+    if [ $? -eq 0 ] && [ "${Update}" = "" ];then
       echo -n ${PublicIP}>${CachedIP}
       echo "Success!"
       eval ${SuccessExec}
