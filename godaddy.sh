@@ -8,6 +8,7 @@
 # Requirements:
 # - Bash - On LEDE/OpenWRT, opkg install bash
 # - curl CLI - On Debian, apt-get install curl
+# - jq - On Debian, apt-get install jq
 #
 # History:
 # v1.0 - 20160513 - 1st release.
